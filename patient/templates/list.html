@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>환자 리스트</title>
+<style>
+  table {
+    width: 80%;
+    border: 1px solid #444444;
+  }
+  th, td {
+    border: 1px solid #444444;
+  }
+</style>
+
+</head>
+<body>
+<h2>환자 리스트</h2>
+<form method="post" action="insert_patient">
+	{% csrf_token %}
+	이름: <input name="Pt_name">
+	생년월일: <input name="Pt_bdate" value="2019-07-01"><br>
+	<input type="radio" name="Pt_man" value=1 checked="checked">남자
+	<input type="radio" name="Pt_man" value=0>여자
+<!--
+	<성별: <input name="Pt_man"><br>
+-->
+	<input type="submit" value"확인">
+
+</form>
+
+<br>
+{{patientCount}}명의 환자가 있습니다.
+<table>
+	<tr>
+		<th>번호</th>
+		<th>이름</th>
+		<th>생년월일</th>
+		<th>남자</th>
+		<th>수정일자</th>
+	</tr>
+	{% for row in patientList %}
+	<tr>
+		<td>{{row.idx}}</td>
+		<td>
+<a href="detail_patient?idx={{row.idx}}">{{row.Pt_name}}</a>
+		</td>
+		<td>{{row.Pt_bdate}}</td>
+		<td>{{row.Pt_man}}</td>
+		<td>{{row.post_date}}</td>
+	</tr>
+	{% endfor %}
+	
+</table>
+
+
+</body>
+</html>

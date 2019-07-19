@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>상세화면</title>
+<style>
+  table {
+    width: 50%;
+    border: 1px solid #444444;
+  }
+  th, td {
+    border: 1px solid #444444;
+  }
+</style>
+
+<script>
+function update(){
+	document.form1.action="update_check";
+	document.form1.submit();
+}
+
+function del(){
+	if(confirm("삭제하시겠습니까?")){
+		document.form1.action="delete_check";
+		document.form1.submit();
+	}
+}
+
+
+
+</script>
+
+
+</head>
+<body>
+
+
+
+<h2>검진결과 편집</h2>
+<div>
+	<table>
+		<tr>
+			<td>이름</td>
+			<td>{{dtoP.Pt_name}}</td>
+		</tr>
+		<tr>
+			<td>생년월일</td>
+			<td>{{dtoP.Pt_bdate}}</td>
+		</tr>
+		<tr>
+			<td>검진일자(수정전)</td>
+			<td>{{dtoC.in_date}}</td>
+		</tr>
+	</table>
+</div>
+
+<form method="POST" name="form1">
+{% csrf_token %}
+
+<table>
+
+<!-- 주석처리	
+	<tr>
+		<th>검진일자</th>
+		<th>체중</th>
+		<th>당뇨</th>
+		<th>협압(최저)</th>
+		<th>협압(최고)</th>
+	</tr>
+-->
+	<tr>
+			<td>검진일자</td>
+			<td><input type="date" name="in_date" value="{{dtoC.in_date}}"></td>
+	</tr>
+	<tr>
+		<td>체중</td>
+		<td><input name="in_wt" value="{{dtoC.in_wt}}"></td>
+	</tr>
+	<tr>
+		<td>당뇨</td>
+		<td><input name="in_db" value="{{dtoC.in_db}}"></td>
+	</tr>
+	<tr>
+		<td>혈압(최저)</td>
+		<td><input name="in_bp_l" value="{{dtoC.in_bp_l}}"></td>
+	</tr>
+	<tr>
+		<td>혈압(최고)</td>
+		<td><input name="in_bp_h" value="{{dtoC.in_bp_h}}"></td>
+	</tr>
+	<tr>
+		<td><input type="hidden" name="sno" value="{{dtoC.sno}}"></td>
+		<td><input type="hidden" name="idx" value="{{dtoP.idx}}"></td>
+		<td><input type="button" value="수정" onclick="update()"></td>
+		<td><input type="button" value="삭제" onclick="del()"></td>
+		
+		
+	</tr>
+</table>
+</form>
+</body>
+</html>

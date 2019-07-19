@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>상세화면</title>
+<style>
+  table {
+    width: 100%;
+    border: 1px solid #444444;
+  }
+  th, td {
+    border: 1px solid #444444;
+  }
+</style>
+
+<!-- 주석처리 
+<script>
+function update(){
+	document.form1.action="update_memo";
+	document.form1.submit();
+}
+
+function del(){
+	document.form1.action="delete_memo";
+	document.form1.submit();
+	
+}
+
+
+
+</script>
+
+-->
+
+</head>
+<body>
+
+
+<h2>검진 결과</h2>
+<form method="post" action="insert_check">
+	{% csrf_token %}
+	검진일자: <input type="date" name="in_date"><br>
+	체중: <input name="in_wt"><br>
+	당뇨: <input name="in_db"><br>
+	혈압: <input name="in_bp_l">~<input name="in_bp_h">
+	<input type="hidden" name="idx_id" value={{dto.idx}}> 
+	
+	<input type="submit" value"확인">
+
+</form>
+
+<br>
+{{dto.idx}} 번의 idx 자료입니다.
+<br>
+{{dto.Pt_name}}({{dto.Pt_bdate}}) 환자의 검사 기록입니다 <br>
+
+<table>
+	<tr>
+		<th>검진일자</th>
+		<th>체중</th>
+		<th>당뇨</th>
+		<th>협압</th>
+	</tr>
+
+	{% for row in dtoList %}
+	<tr>
+		<td>
+<a href="detail_check?idx={{dto.idx}}&sno={{row.sno}}">{{row.in_date}}</a>
+		</td>
+		<td>{{row.in_wt}}</td>
+		<td>{{row.in_db}}</td>
+		<td>{{row.in_bp_l}} ~ {{row.in_bp_h}}</td>
+	</tr>
+	{% endfor %}
+	
+</table>
+</body>
+</html>
+
+
+
